@@ -25,24 +25,8 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["client", "employee"],
-    required: true,
   },
 });
 
-const ClientSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
-
-const EmployeeSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
-
-module.exports = mongoose.model("User", UserSchema);
-module.exports = mongoose.model("Client", ClientSchema);
-module.exports = mongoose.model("Employee", EmployeeSchema);
+const User = mongoose.model("User", UserSchema);
+export default User;
