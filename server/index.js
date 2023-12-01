@@ -9,7 +9,8 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url"; // path & fileURLToPath allow us to properly set the paths when we configre directories
 import authRoutes from "./routes/auth.js";
-import { createClient, createEmployee } from "./controllers/auth.js";
+import userRoutes from "./routes/users.js";
+import appointmentRoutes from "./routes/appointments.js";
 
 /* CONFIGURATIONS (MIDDLEWARE/ PACKAGE) */
 // These configurations are so we can grab the file url and specifically when we use the modules
@@ -39,12 +40,10 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-/* ROUTES WITH FILES */
-app.post("/auth/register/client", createClient);
-app.post("/auth/register/employee", createEmployee);
-
 /* ROUTES */
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/appointments", appointmentRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
