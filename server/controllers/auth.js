@@ -55,21 +55,26 @@ export const createEmployee = async (req, res) => {
 /* LOGGING IN */
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).json({ msg: "User does not exist." });
 
-    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
     if (!isPasswordCorrect)
       return res.status(400).json({ msg: "Invalid credentials." });
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      process.env.JWT_SECRET
-    );
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT);
 
-    delete user.password;
-    res.status(200).json({ token, user });
+    const { password, role, phoneNumber, ...otherDetails } = user._doc;
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({ ...otherDetails });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

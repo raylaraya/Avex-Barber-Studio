@@ -1,55 +1,54 @@
 import express from "express";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
-import path from "path";
-import { fileURLToPath } from "url"; // path & fileURLToPath allow us to properly set the paths when we configre directories
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import appointmentRoutes from "./routes/appointments.js";
+import cookieParser from "cookie-parser";
 
-/* CONFIGURATIONS (MIDDLEWARE/ PACKAGE) */
-// These configurations are so we can grab the file url and specifically when we use the modules
-// (Only when we use the type modules)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config(); // allows us to use dotenv files
 const app = express(); // invokes express application so we can use middleware
+dotenv.config(); // allows us to use dotenv files
+
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
+    console.log("Connected to mongoDB");
+  } catch (error) {
+    throw error;
+  }
+};
+
+mongoose.connection.on("disconnected", () => {
+  console.log("mongoDB disconnected!");
+});
+
+// middlewares
+app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors()); // cross origin resource sharing policies
-app.use("/assets", express.static(path.join(__dirname, "public/assets"))); // sets dir of where we keep our assets(images)
 
-/* FILE STORAGE */
-const storage = multer.diskStorage({
-  destination: function (req, res, cb) {
-    cb(null, "public/assests");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
-
-/* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/appointments", appointmentRoutes);
 
-/* MONGOOSE SETUP */
-const PORT = process.env.PORT || 6001;
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-  })
-  .catch((error) => console.log(`${error} did not connect`));
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
+
+app.listen(3001, () => {
+  connect();
+  console.log("Connected to backend");
+});
