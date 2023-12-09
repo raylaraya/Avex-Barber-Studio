@@ -27,7 +27,7 @@ mongoose.connection.on("disconnected", () => {
 
 // middlewares
 app.use(cookieParser());
-app.use(express.json());
+app.use(express.json()); // allows us to send JSON object to express server when testing API endpoints (postman)
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));

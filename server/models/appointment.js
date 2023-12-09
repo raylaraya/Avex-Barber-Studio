@@ -4,12 +4,12 @@ const AppointmentSchema = new mongoose.Schema({
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Client",
-    required,
+    required: true,
   },
   employee: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
-    required,
+    required: true,
   },
   date: {
     type: Date,
@@ -20,7 +20,7 @@ const AppointmentSchema = new mongoose.Schema({
     required: true,
   },
   service: {
-    name: String,
+    type: String,
     required: true,
   },
 });
