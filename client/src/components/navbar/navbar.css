@@ -1,6 +1,7 @@
 .navbar {
   width: 100%;
-  background-color: #495057;
+  /* background-color: #495057; */
+  background-color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -9,14 +10,26 @@
   z-index: 10;
 }
 
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
 .logo-container {
-  display: inline-block;
-  height: 70px;
+  /* display: inline-block; */
+  display: flex;
+  height: 100px;
   cursor: pointer;
 }
 
 .logo-image {
   height: 100%;
+  /* padding: 0 6rem 0; */
 }
 
 .navbar-menu {
@@ -24,25 +37,54 @@
   align-items: center;
   width: 100%;
   justify-content: center;
+  /* transform: none;
+  transition: none; */
 }
 
 .navbar-item {
   margin-right: 24px;
-  padding: 1rem;
+  padding: 0.3rem;
   justify-content: center;
-  font-size: 1.5em;
+  font-size: 1.1em;
 }
 
 .navbar-item a {
   color: white;
+  transition: color 0.3s;
+}
+
+.navbar-item a:hover {
+  /* color: #fcbf49; */
+  color: #e09f3e;
 }
 
 .hamburger {
   display: none;
 }
 
+.book-button {
+  padding: 10px 20px;
+  /* background-color: #fcbf49; */
+  background-color: #e09f3e;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2em;
+  padding: 10px 40px;
+  display: inline-block;
+  align-self: center;
+}
+
 @media (max-width: 940px) {
-  .navbar-menu {
+  /* .navbar-menu {
+    display: none;
+  } */
+  .navbar {
+    z-index: 100;
+  }
+
+  .book-button {
     display: none;
   }
 
@@ -55,16 +97,48 @@
     position: absolute;
     /* top: 1rem; */
     right: 1rem;
+    z-index: 110;
   }
 
-  .navbar-menu.expanded {
+  /* .navbar-menu.expanded {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 70px;
+    top: 100px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #495057;
+    z-index: 10;
+  } */
+
+  .navbar-menu {
+    /* Initially hide the menu */
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--navbar-height, 100px);
+    /* opacity: 0; */
     left: 0;
     width: 100%;
     background-color: #495057;
-    z-index: 9;
+    transform: translateX(-100%);
+    /* transition: transform 0.5s ease-out; */
+    /* transition: none; */
+    z-index: 10;
+  }
+
+  /* When the "animate" class is added, only then allow the transition */
+  .navbar-menu.animate {
+    transition: transform 0.5s ease-out;
+  }
+
+  .navbar-menu.expanded {
+    /* Slide down the menu */
+    transform: translateX(0);
+    /* z-index: 105; */
+    /* top: 100%; */
+    /* opacity: 1; */
+    /* transition: all 0.5s ease; */
   }
 }
