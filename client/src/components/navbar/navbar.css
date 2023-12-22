@@ -59,10 +59,10 @@
   display: none;
 }
 
-.book-button {
+.login-button {
   padding: 10px 20px;
   /* background-color: #fcbf49; */
-  background-color: #e09f3e;
+  background-color: #495057;
   text-decoration: none;
   color: white;
   border: none;
@@ -71,6 +71,16 @@
   padding: 10px 40px;
   display: inline-block;
   align-self: center;
+  transition: background-color 0.5s ease, transform 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #e09f3e;
+  transform: scale(1.05);
+}
+
+.login-button:active {
+  transform: scale(0.95);
 }
 
 @media (max-width: 940px) {
@@ -78,7 +88,7 @@
     z-index: 100;
   }
 
-  .book-button {
+  .login-button {
     display: none;
   }
 
@@ -108,12 +118,11 @@
     background-color: black;
     transform: translateY(-30rem);
     transition: transform 0.5s ease-out;
-    /* transition: none; */
     z-index: 10;
   }
 
   .navbar-menu.expanded {
     transform: translateY(0);
-    /* transition: transform 0.5s ease-in; */
+    /* transition: transform 0.5s ease-out; */
   }
 }

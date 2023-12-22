@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -40,8 +40,8 @@ const Navbar = () => {
             <Link to="/contact">CONTACT</Link>
           </li>
         </ul>
-        <Link to="/appointments" className="book-button">
-          BOOK
+        <Link to="/login" className="login-button">
+          Login
         </Link>
         <div className="hamburger" onClick={handleClick}>
           {isNavExpanded ? <FaTimes /> : <FaBars />}

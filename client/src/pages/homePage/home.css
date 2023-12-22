@@ -1,0 +1,45 @@
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  background-image: url("/AvexHero.jpg");
+  background-size: cover;
+  background-position: 50% 45%;
+  /* background-position: center; */
+  color: white;
+}
+
+.hero-section h1 {
+  font-size: 7rem;
+}
+
+.hero-section p {
+  font-size: 2.5rem;
+}
+
+.book-button {
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  /* background-color: #495057; */
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border: 2px solid white;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.book-button:hover {
+  background-color: #e09f3e;
+  transform: scale(1.05);
+}
+
+.book-button:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+}
