@@ -41,5 +41,8 @@
   transform: scale(0.95);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1145px) {
+  .hero-section h1 {
+    font-size: 5rem;
+  }
 }
