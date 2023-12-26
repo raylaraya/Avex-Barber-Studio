@@ -2,6 +2,7 @@ import "./home.css";
 import Navbar from "../../components/navbar/Navbar";
 import { Link } from "react-router-dom";
 import ServicesSection from "../../components/servicesSection/servicesSection";
+import Footer from "../../components/footer/Footer";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
         </Link>
       </div>
       <ServicesSection />
+      <Footer />
     </div>
   );
 };
