@@ -42,7 +42,7 @@ const ServiceCard = ({ title, description, price, imageUrl }) => (
     <div className="service-footer">
       <span className="service-price">{price}</span>
       <Link to="appointments" className="service-card-button">
-        BOOK NOW
+        BOOK
         <FaArrowRight />
       </Link>
     </div>
