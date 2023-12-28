@@ -25,9 +25,6 @@ const Navbar = () => {
             <Link to="/">HOME</Link>
           </li>
           <li className="navbar-item">
-            <Link to="/services">SERVICES</Link>
-          </li>
-          <li className="navbar-item">
             <Link to="/appointments">APPOINTMENTS</Link>
           </li>
           <li className="navbar-item">
@@ -35,9 +32,6 @@ const Navbar = () => {
           </li>
           <li className="navbar-item">
             <Link to="/about">ABOUT</Link>
-          </li>
-          <li className="navbar-item">
-            <Link to="/contact">CONTACT</Link>
           </li>
         </ul>
         <Link to="/login" className="login-button">

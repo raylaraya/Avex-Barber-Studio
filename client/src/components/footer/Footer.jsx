@@ -30,7 +30,7 @@ const Footer = () => {
           <h4>CONTACT US</h4>
           <p>Vinny Santiago</p>
           <p>
-            <TfiLocationPin /> 33 White Horse Ave, Trenton, New Jersey 08610
+            <TfiLocationPin /> 33 White Horse Ave, Hamilton, New Jersey 08610
           </p>
           <p>
             <FiPhone /> 609-516-0026

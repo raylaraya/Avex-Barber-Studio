@@ -1,6 +1,5 @@
 .navbar {
   width: 100%;
-  /* background-color: #495057; */
   background-color: black;
   display: flex;
   justify-content: space-between;
@@ -51,7 +50,6 @@
 }
 
 .navbar-item a:hover {
-  /* color: #fcbf49; */
   color: #e09f3e;
 }
 
@@ -61,7 +59,6 @@
 
 .login-button {
   padding: 10px 20px;
-  /* background-color: #fcbf49; */
   background-color: #495057;
   text-decoration: none;
   color: white;
@@ -83,7 +80,7 @@
   transform: scale(0.95);
 }
 
-@media (max-width: 940px) {
+@media (max-width: 768px) {
   .navbar {
     z-index: 100;
   }
@@ -114,7 +111,6 @@
     top: var(--navbar-height, 100px);
     left: 0;
     width: 100%;
-    /* background-color: #495057; */
     background-color: black;
     transform: translateY(-30rem);
     transition: transform 0.5s ease-out;
@@ -123,6 +119,5 @@
 
   .navbar-menu.expanded {
     transform: translateY(0);
-    /* transition: transform 0.5s ease-out; */
   }
 }

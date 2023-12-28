@@ -1,5 +1,5 @@
 import React from "react";
-import "./servicesSection.css";
+import "./service-section.css";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 

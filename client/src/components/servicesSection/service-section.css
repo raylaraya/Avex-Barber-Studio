@@ -8,6 +8,12 @@
   /* align-items: stretch; */
 }
 
+@media (max-width: 1215px) {
+  /* .services-section {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  } */
+}
+
 .service-card {
   display: flex;
   flex-direction: column;
