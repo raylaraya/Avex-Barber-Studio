@@ -87,12 +87,12 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 840px) {
   .about-container {
     flex-direction: column;
   }
 
   .about-button {
-    margin: 1rem 3rem;
+    margin: 1rem auto;
   }
 }
