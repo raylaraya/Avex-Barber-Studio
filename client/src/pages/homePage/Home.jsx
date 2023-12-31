@@ -17,7 +17,16 @@ const Home = () => {
         </Link>
       </div>
       <ServicesSection />
-      <AboutSection />
+      <AboutSection
+        title="About Avex Barber Studio"
+        paragraphs={[
+          "Welcome to Avex Barber Studio! Located at 33 White Horse Avenue in Hamilton, New Jersey, our barbershop was brought to life in November 2022 through the passion and ambition of our owner, Vinny Santiago. Vinny is not only highly skilled and dedicated to his craftsmanship but also dedicated to building lasting relationships with his clients and giving back to the community.",
+          "For more information on Avex Barber Studio and its owner press the button below.",
+        ]}
+        imageSrc="/shop.jpeg"
+        linkTo="/about"
+        linkText="Learn More"
+      />
       <Footer />
     </div>
   );
