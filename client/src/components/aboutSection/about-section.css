@@ -73,7 +73,7 @@
   width: calc(33.333% - 10px);
   height: 500px;
   object-fit: cover;
-  /* margin: 10px; */
+  margin: 10px;
 }
 
 @media (max-width: 1080px) {
@@ -94,11 +94,5 @@
 
   .about-button {
     margin: 1rem auto;
-  }
-}
-
-@media (max-width: 785px) {
-  .about-additional-image {
-    object-fit: contain;
   }
 }
