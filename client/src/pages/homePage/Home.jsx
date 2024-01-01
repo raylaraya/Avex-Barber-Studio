@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 import ServicesSection from "../../components/servicesSection/servicesSection";
 import Footer from "../../components/footer/Footer";
 import AboutSection from "../../components/aboutSection/AboutSection";
+import { useEffect } from "react";
 
 const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="homepage">
       <Navbar />

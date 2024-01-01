@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./footer.css";
 import { Link } from "react-router-dom";
 import { FaInstagram } from "react-icons/fa";
@@ -7,6 +7,10 @@ import { FiPhone } from "react-icons/fi";
 import { AiOutlineClockCircle } from "react-icons/ai";
 
 const Footer = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -21,10 +25,10 @@ const Footer = () => {
         </div>
         <div className="footer-list">
           <h4>EXPLORE</h4>
-          <Link to="/home">HOME</Link>
-          <Link to="/home">APPOINTMENTS</Link>
-          <Link to="/home">GALLERY</Link>
-          <Link to="/home">ABOUT</Link>
+          <Link to="/">HOME</Link>
+          <Link to="/appointments">APPOINTMENTS</Link>
+          <Link to="/gallery">GALLERY</Link>
+          <Link to="/about">ABOUT</Link>
         </div>
         <div className="footer-list">
           <h4>CONTACT US</h4>
