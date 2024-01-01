@@ -96,3 +96,10 @@
     margin: 1rem auto;
   }
 }
+
+@media (max-width: 785px) {
+  .about-additional-image {
+    object-fit: contain;
+    margin: 0;
+  }
+}
