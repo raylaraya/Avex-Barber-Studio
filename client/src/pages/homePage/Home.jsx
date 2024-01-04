@@ -5,6 +5,24 @@ import ServicesSection from "../../components/servicesSection/servicesSection";
 import Footer from "../../components/footer/Footer";
 import AboutSection from "../../components/aboutSection/AboutSection";
 import { useEffect } from "react";
+import ImageCarousel from "../../components/imageCarousel/ImageCarousel";
+
+const homePageImages = [
+  "/vinnyCutting2.jpg",
+  "IMG_9045.jpg",
+  "/IMG_7341.jpg",
+  "IMG_7435.jpg",
+  "haircut2.jpg",
+  "beard.JPG",
+  "enhancements.JPG",
+  "IMG_9046.jpg",
+  "IMG_9232.jpg",
+  "haircut.JPG",
+  "shapeUp.jpg",
+  "taper.jpg",
+  "/anthonyBeard.JPG",
+  "newClient.jpg",
+];
 
 const Home = () => {
   useEffect(() => {
@@ -12,7 +30,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="homepage">
+    <div className="home-page">
       <Navbar />
       <div className="hero-section">
         <h1>AVEX BARBER STUDIO</h1>
@@ -32,6 +50,7 @@ const Home = () => {
         linkTo="/about"
         linkText="Learn More"
       />
+      <ImageCarousel images={homePageImages} />
       <Footer />
     </div>
   );

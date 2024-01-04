@@ -9,7 +9,7 @@ const services = [
     description:
       "Tailored haircut for first time visitors. We take extra time to understand your style preferences.",
     price: "$40",
-    imageUrl: "/shop.jpeg",
+    imageUrl: "/taper.jpg",
   },
   {
     title: "Haircut",
