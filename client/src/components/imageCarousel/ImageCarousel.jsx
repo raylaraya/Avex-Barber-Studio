@@ -1,67 +1,60 @@
-import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import "./image-carousel.css";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaArrowRightLong } from "react-icons/fa6";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+function CustomNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "gray" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function CustomPrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "gray" }}
+      onClick={onClick}
+    />
+  );
+}
 
 const ImageCarousel = ({ images }) => {
-  const [index, setIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Clean up the even listener when the component unmounts
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const goToPrevious = () => {
-    setIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : images.length - 1
-    );
-  };
-
-  const goToNext = () => {
-    setIndex((prevIndex) =>
-      prevIndex < images.length - 1 ? prevIndex + 1 : 0
-    );
-  };
-
-  // Render only the relevant images based on the current index
-  const getRelevantImages = () => {
-    if (isMobile) {
-      return [images[index]];
-    } else {
-      const prevIndex = index - 1 < 0 ? images.length - 1 : index - 1;
-      const nextIndex = index + 1 >= images.length ? 0 : index + 1;
-      return [images[prevIndex], images[index], images[nextIndex]];
-    }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
+    responsive: [
+      {
+        breakpoint: 923,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
     <div className="carousel-container">
       <h2 className="carousel-header">OUR GALLERY</h2>
-      <div className="carousel-wrapper">
-        {getRelevantImages().map((image, idx) => (
-          <img key={idx} src={image} alt={`Slide ${idx}`} className="slide" />
+      <Slider {...settings}>
+        {images.map((image, idx) => (
+          <div key={idx}>
+            <img src={image} alt={`Slide ${idx}`} className="slide-image" />
+          </div>
         ))}
-        <div className="nav-button left" onClick={goToPrevious}></div>
-        <div className="nav-button right" onClick={goToNext}></div>
-      </div>
-      <div className="carousel-footer">
-        <span className="image-counter">{`${index + 1} / ${
-          images.length
-        }`}</span>
-        <button className="footer-nav-button left" onClick={goToPrevious}>
-          <FaArrowLeftLong />
-        </button>
-        <button className="footer-nav-button right" onClick={goToNext}>
-          <FaArrowRightLong />
-        </button>
-      </div>
+      </Slider>
     </div>
   );
 };

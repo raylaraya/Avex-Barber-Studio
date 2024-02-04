@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import ImageCarousel from "../../components/imageCarousel/ImageCarousel";
 
 const homePageImages = [
+  "newClient.jpg",
   "/vinnyCutting2.jpg",
   "IMG_9045.jpg",
   "/IMG_7341.jpg",
@@ -19,7 +20,6 @@ const homePageImages = [
   "shapeUp.jpg",
   "taper.jpg",
   "anthonyBeard.JPG",
-  "newClient.jpg",
 ];
 
 const Home = () => {
