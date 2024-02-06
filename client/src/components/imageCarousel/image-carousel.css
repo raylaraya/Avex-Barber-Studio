@@ -15,6 +15,11 @@
   max-height: 550px;
 }
 
+.slick-arrow:before {
+  color: black !important;
+  border-radius: 50%;
+}
+
 @media (max-width: 923px) {
   .slick-slide img {
     height: 100%;

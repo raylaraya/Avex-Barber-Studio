@@ -1,14 +1,14 @@
 import Slider from "react-slick";
-import "./image-carousel.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./image-carousel.css";
 
 function CustomNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "gray" }}
+      style={{ ...style, display: "block", background: "transparent" }}
       onClick={onClick}
     />
   );
@@ -19,7 +19,7 @@ function CustomPrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "gray" }}
+      style={{ ...style, display: "block", background: "transparent" }}
       onClick={onClick}
     />
   );
