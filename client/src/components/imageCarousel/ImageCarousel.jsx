@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./image-carousel.css";
 
-function CustomNextArrow(props) {
+const CustomNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -12,9 +12,9 @@ function CustomNextArrow(props) {
       onClick={onClick}
     />
   );
-}
+};
 
-function CustomPrevArrow(props) {
+const CustomPrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
@@ -23,7 +23,7 @@ function CustomPrevArrow(props) {
       onClick={onClick}
     />
   );
-}
+};
 
 const ImageCarousel = ({ images }) => {
   const settings = {

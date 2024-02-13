@@ -41,6 +41,12 @@
   transform: scale(0.95);
 }
 
+.services-header {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 2rem;
+}
+
 @media (max-width: 1145px) {
   .hero-section h1 {
     font-size: 4.5rem;

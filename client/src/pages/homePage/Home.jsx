@@ -37,6 +37,7 @@ const Home = () => {
           Book an Appointment
         </Link>
       </div>
+      <h2 className="services-header">SERVICES WE PROVIDE</h2>
       <ServicesSection />
       <AboutSection
         title="About Avex Barber Studio"

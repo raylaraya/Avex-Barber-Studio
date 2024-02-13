@@ -16,7 +16,7 @@
 }
 
 .slick-arrow:before {
-  color: black !important;
+  color: gray !important;
   border-radius: 50%;
 }
 
