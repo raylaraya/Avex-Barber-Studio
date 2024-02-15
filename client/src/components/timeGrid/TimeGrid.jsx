@@ -8,7 +8,36 @@ const TimeGrid = ({ selectedService }) => {
   // Assuming `selectedService` is a prop that contains the information about the selected service
   // This could include the service's available times, among other things
 
-  const [events, setEvents] = useState([]);
+  // Dummy data for available appointment slots
+  const initialEvents = [
+    {
+      id: 1,
+      title: "Book Now",
+      start: "2024-02-10T10:00:00",
+      end: "2024-02-10T10:30:00",
+    },
+    // More events...
+  ];
+
+  const [events, setEvents] = useState(initialEvents);
+
+  const renderEventContent = (eventInfo) => {
+    return (
+      <>
+        <button onClick={() => handleEventClick(eventInfo)}>
+          {eventInfo.timeText}
+        </button>
+      </>
+    );
+  };
+
+  // Event click handler
+  const handleEventClick = (clickInfo) => {
+    clickInfo.jsEvent.preventDefault(); // Prevent the calendar's default click behavior
+
+    // Implement booking logic here
+    alert(`You clicked on event with id: ${clickInfo.event.id}`);
+  };
 
   useEffect(() => {
     // Here, fetch or compute the available times for the selected service
@@ -49,6 +78,8 @@ const TimeGrid = ({ selectedService }) => {
         initialView="timeGridWeek" // or "timeGridDay" for daily view
         height="90vh"
         events={events} // Use the state to dynamically update events
+        eventContent={renderEventContent}
+        eventClick={handleEventClick}
         headerToolbar={{
           left: "prev,next today",
           right: "timeGridDay,timeGridWeek",
