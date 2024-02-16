@@ -23,7 +23,31 @@ const AppointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  timeSlot: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "TimeSlot",
+  },
+});
+
+const TimeSlotSchema = new mongoose.Schema({
+  startTime: {
+    type: Data,
+    required: true,
+  },
+  endTime: {
+    type: Data,
+    required: true,
+  },
+  isBooked: {
+    type: Boolean,
+    default: false,
+  },
+  appointment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Appointment",
+  },
 });
 
 const Appointment = mongoose.model("Appointment", AppointmentSchema);
-export default Appointment;
+const TimeSlot = mongoose.model("TimeSlot", TimeSlotSchema);
+export { Appointment, TimeSlot };

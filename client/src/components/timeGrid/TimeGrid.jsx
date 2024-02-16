@@ -13,9 +13,40 @@ const TimeGrid = ({ selectedService }) => {
     {
       id: 1,
       title: "Book Now",
-      start: "2024-02-10T10:00:00",
-      end: "2024-02-10T10:30:00",
+      start: "2024-02-14T10:00:00",
+      end: "2024-02-14T10:30:00",
     },
+    {
+      id: 2,
+      title: "Haircut",
+      start: "2024-02-14T10:30:00",
+      end: "2024-02-14T11:00:00",
+    },
+    {
+      id: 3,
+      title: "Haircut",
+      start: "2024-02-14T11:00:00",
+      end: "2024-02-14T11:30:00",
+    },
+    {
+      id: 4,
+      title: "Haircut",
+      start: "2024-02-14T11:30:00",
+      end: "2024-02-14T12:00:00",
+    },
+    {
+      id: 5,
+      title: "Haircut",
+      start: "2024-02-14T12:30:00",
+      end: "2024-02-14T13:00:00",
+    },
+    {
+      id: 6,
+      title: "Haircut",
+      start: "2024-02-14T13:00:00",
+      end: "2024-02-14T13:30:00",
+    },
+
     // More events...
   ];
 

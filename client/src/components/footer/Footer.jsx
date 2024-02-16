@@ -40,10 +40,10 @@ const Footer = () => {
             <FiPhone /> 609-516-0026
           </p>
           <p>
-            <AiOutlineClockCircle /> MON-WED: 8:30AM - 6:30PM
+            <AiOutlineClockCircle /> MON-WED: 8:30AM - 5:30PM
           </p>
           <p>
-            <AiOutlineClockCircle /> THURS-SAT: 8AM - 7PM
+            <AiOutlineClockCircle /> THURS-SAT: 8AM - 6:30PM
           </p>
         </div>
       </div>
