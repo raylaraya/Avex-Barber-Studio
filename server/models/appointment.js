@@ -26,16 +26,17 @@ const AppointmentSchema = new mongoose.Schema({
   timeSlot: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "TimeSlot",
+    required: true,
   },
 });
 
 const TimeSlotSchema = new mongoose.Schema({
-  startTime: {
-    type: Data,
+  dayOfWeek: {
+    type: Number,
     required: true,
   },
-  endTime: {
-    type: Data,
+  startTime: {
+    type: String,
     required: true,
   },
   isBooked: {
@@ -45,6 +46,7 @@ const TimeSlotSchema = new mongoose.Schema({
   appointment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Appointment",
+    required: false,
   },
 });
 
