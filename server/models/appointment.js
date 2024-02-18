@@ -34,6 +34,7 @@ const TimeSlotSchema = new mongoose.Schema({
   dayOfWeek: {
     type: Number,
     required: true,
+    index: true,
   },
   startTime: {
     type: String,
@@ -42,6 +43,7 @@ const TimeSlotSchema = new mongoose.Schema({
   isBooked: {
     type: Boolean,
     default: false,
+    index: true,
   },
   appointment: {
     type: mongoose.Schema.Types.ObjectId,
@@ -49,6 +51,8 @@ const TimeSlotSchema = new mongoose.Schema({
     required: false,
   },
 });
+
+TimeSlotSchema.index({ dayOfWeek: 1, isBooked: 1 });
 
 const Appointment = mongoose.model("Appointment", AppointmentSchema);
 const TimeSlot = mongoose.model("TimeSlot", TimeSlotSchema);
