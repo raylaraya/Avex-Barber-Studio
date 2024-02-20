@@ -33,14 +33,14 @@ const generateAllTimeSlots = () => {
   // Generate time slots for Monday (1) to Wednesday (3), 8:30AM - 5:30PM
   for (let day = 1; day <= 3; day++) {
     allTimeSlots = allTimeSlots.concat(
-      generateTimeSlotsForDay(day, "08:30", "17:30")
+      generateTimeSlotsForDay(day, "08:30", "18:00")
     );
   }
 
   // Generate time slots for Thursday (4) to Saturday (6), 8AM - 6:30PM
   for (let day = 4; day <= 6; day++) {
     allTimeSlots = allTimeSlots.concat(
-      generateTimeSlotsForDay(day, "08:00", "18:30")
+      generateTimeSlotsForDay(day, "08:00", "19:00")
     );
   }
 

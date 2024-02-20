@@ -106,7 +106,7 @@ const TimeGrid = ({ selectedService }) => {
     <div className="time-grid">
       <FullCalendar
         plugins={[timeGridPlugin, interactionPlugin]}
-        initialView="timeGridWeek" // or "timeGridDay" for daily view
+        initialView="timeGridWeek"
         height="90vh"
         events={events} // Use the state to dynamically update events
         eventContent={renderEventContent}
@@ -115,14 +115,66 @@ const TimeGrid = ({ selectedService }) => {
           left: "prev,next today",
           right: "timeGridDay,timeGridWeek",
         }}
-        hiddenDays="[0]"
-        slotDuration="00:30:00" // 30 minute time slots
-        slotMinTime="08:00:00" // Calendar starts at 8am
-        slotMaxTime="20:00:00" // Calendar ends at 7pm
-        // Add more configuration as needed, e.g., event click handlers, etc.
+        hiddenDays="[0]" // Hide Sundays
+        slotDuration="00:30:00"
+        slotMinTime="08:00:00"
+        slotMaxTime="20:00:00"
       />
     </div>
   );
 };
+
+// const [events, setEvents] = useState([]);
+
+// // Fetch booked time slots from the backend
+// const fetchBookedTimeSlots = async () => {
+//   try {
+//     const response = await axios.get('http://localhost:3000/api/timeslots/booked');
+//     const bookedTimeSlots = response.data.map(slot => ({
+//       id: slot._id,
+//       title: slot.service, // Assuming you have a service field
+//       start: slot.startTime, // Make sure this is a full ISO date string
+//       end: moment(slot.startTime).add(30, 'minutes').toISOString(), // Add 30 minutes to start time
+//       // You might need additional fields here depending on your exact requirements
+//     }));
+//     setEvents(bookedTimeSlots);
+//   } catch (error) {
+//     console.error("Error fetching booked time slots:", error);
+//   }
+// };
+
+// useEffect(() => {
+//   if (selectedService) {
+//     fetchBookedTimeSlots();
+//   }
+// }, [selectedService]);
+
+// // Event click handler
+// const handleEventClick = (clickInfo) => {
+//   clickInfo.jsEvent.preventDefault();
+//   alert(`You clicked on event with id: ${clickInfo.event.id}`);
+//   // Implement the booking logic or interaction here
+// };
+
+// return (
+//   <div className="time-grid">
+//     <FullCalendar
+//       plugins={[timeGridPlugin, interactionPlugin]}
+//       initialView="timeGridWeek"
+//       height="90vh"
+//       events={events}
+//       eventClick={handleEventClick}
+//       headerToolbar={{
+//         left: "prev,next today",
+//         right: "timeGridDay,timeGridWeek",
+//       }}
+//       hiddenDays={[0]} // Hide Sundays
+//       slotDuration="00:30:00"
+//       slotMinTime="08:00:00"
+//       slotMaxTime="20:00:00"
+//     />
+//   </div>
+// );
+// };
 
 export default TimeGrid;
