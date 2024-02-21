@@ -8,7 +8,7 @@ const Appointments = () => {
   return (
     <div className="appointments-page">
       <Navbar />
-      <h1 className="appointments-calendar-header">SELECT A DATE & TIME</h1>
+      <h1 className="appointments-calendar-header">SELECT A TIME</h1>
       <TimeGrid />
       <Footer />
     </div>

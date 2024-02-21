@@ -8,12 +8,16 @@ import {
   getAppointment,
   updateAppointment,
   getBookedTimeSlots,
+  getUnbookedTimeSlots,
 } from "../controllers/appointments.js";
 
 const router = express.Router();
 
 // CREATE
 router.post("/", verifyUser, createAppointment);
+
+// GET UNBOOKED TIME SLOTS
+router.get("/timeslots/unbooked", verifyEmployee, getUnbookedTimeSlots);
 
 // GET BOOKED TIME SLOTS
 router.get("/timeslots/booked", verifyEmployee, getBookedTimeSlots);
