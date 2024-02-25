@@ -31,14 +31,10 @@ const AppointmentSchema = new mongoose.Schema({
 });
 
 const TimeSlotSchema = new mongoose.Schema({
-  dayOfWeek: {
-    type: Number,
+  date: {
+    type: Date,
     required: true,
     index: true,
-  },
-  startTime: {
-    type: String,
-    required: true,
   },
   isBooked: {
     type: Boolean,

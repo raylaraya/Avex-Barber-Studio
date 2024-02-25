@@ -5,13 +5,12 @@ export const createAppointment = async (req, res, next) => {
   try {
     // Extract and format the desired date and time from the request body
     const desiredDateTime = moment.tz(req.body.date, "America/New_York");
-    const dayOfWeek = desiredDateTime.isoWeekday(); // Get day of week (1 = Monday, 7 = Sunday)
-    const startTime = desiredDateTime.format("HH:mm"); // Format to match your schema's startTime field
 
-    // Find an available time slot that matches the desired day and start time
+    // Find an available time slot that matches the desired date and time
+    // Note: You will need to adjust the time slot finding logic here based on your updated TimeSlot model
+    // For example, if you're now using a full 'date' field in TimeSlot, you would compare against that
     const timeSlot = await TimeSlot.findOne({
-      dayOfWeek: dayOfWeek,
-      startTime: startTime,
+      date: desiredDateTime.toDate(), // Convert to JavaScript Date object for comparison
       isBooked: false,
     });
 

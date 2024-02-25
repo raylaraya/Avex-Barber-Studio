@@ -41,7 +41,12 @@ const ServiceCard = ({ title, description, price, imageUrl }) => (
     <p>{description}</p>
     <div className="service-footer">
       <span className="service-price">{price}</span>
-      <Link to="appointments" className="service-card-button">
+      <Link
+        to={`/appointments?service=${encodeURIComponent(
+          title
+        )}&price=${encodeURIComponent(price)}`}
+        className="service-card-button"
+      >
         BOOK
         <FaArrowRight />
       </Link>

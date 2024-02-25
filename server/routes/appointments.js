@@ -17,7 +17,7 @@ const router = express.Router();
 router.post("/", verifyUser, createAppointment);
 
 // GET UNBOOKED TIME SLOTS
-router.get("/timeslots/unbooked", verifyEmployee, getUnbookedTimeSlots);
+router.get("/timeslots/unbooked", getUnbookedTimeSlots);
 
 // GET BOOKED TIME SLOTS
 router.get("/timeslots/booked", verifyEmployee, getBookedTimeSlots);
