@@ -1,12 +1,25 @@
 import User from "../models/user.js";
 
-/* READ */
+// /* READ */
+// export const getUser = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     res.status(200).json(user);
+//   } catch (err) {
+//     res.status(404).json({ message: err.message });
+//   }
+// };
+
 export const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(404).json({ message: err.message });
+    // Using req.user.id populated by VerifyToken middleware to fetch user details
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ msg: "User not found." });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 

@@ -16,13 +16,16 @@ const router = express.Router();
 //   res.send("Hello employee, you are authorized to delete all accounts");
 // });
 
-/* READ */
+/* Verify User */
+router.get("/verify", verifyToken, getUser);
+
+/* Get specific user using user's ObjectId */
 router.get("/:id", verifyUser, getUser);
 
-/* UPDATE */
+/* Update User */
 router.put("/:id", verifyUser, updateUser);
 
-/* DELETE */
+/* Delete User */
 router.delete("/:id", verifyUser, deleteUser);
 
 export default router;

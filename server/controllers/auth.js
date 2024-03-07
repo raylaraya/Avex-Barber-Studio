@@ -56,7 +56,7 @@ export const createEmployee = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(400).json({ msg: "User does not exist." });
+    if (!user) return res.status(400).json({ msg: "Invalid credentials." });
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
@@ -75,6 +75,22 @@ export const login = async (req, res) => {
       })
       .status(200)
       .json({ ...otherDetails });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/* LOGGING OUT */
+export const logout = async (req, res) => {
+  try {
+    // Clear the "access_token" cookie by setting its expiration date to the past
+    res
+      .cookie("access_token", "", {
+        httpOnly: true,
+        expires: new Date(0), // Set to Unix epoch time, effectively removing it
+      })
+      .status(200)
+      .json({ msg: "Logged out successfully." });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
