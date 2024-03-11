@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const checkLoggedIn = async () => {
       try {
         // Endpoint to verify the user based on the auth cookie
-        const { data } = await axios.get("/users/verify", {
+        const { data } = await axios.get("http://localhost:3001/users/verify", {
           withCredentials: true,
         });
         setUser(data); // Assuming the response includes user data
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const { data } = await axios.post(
-        "/auth/login",
+        "http://localhost:3001/auth/login",
         {
           email,
           password,
@@ -47,7 +47,11 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       // Assuming your backend provides a logout endpoint that clears the auth cookie
-      await axios.post("/auth/logout", {}, { withCredentials: true });
+      await axios.post(
+        "http://localhost:3001/auth/logout",
+        {},
+        { withCredentials: true }
+      );
       setUser(null); // Clear the user state
     } catch (error) {
       console.error("Logout failed:", error);

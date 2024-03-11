@@ -12,6 +12,11 @@ import cookieParser from "cookie-parser";
 const app = express(); // invokes express application so we can use middleware
 dotenv.config(); // allows us to use dotenv files
 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true, // to allow cookies
+};
+
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
@@ -31,7 +36,7 @@ app.use(express.json()); // allows us to send JSON object to express server when
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
-app.use(cors()); // cross origin resource sharing policies
+app.use(cors(corsOptions)); // cross origin resource sharing policies
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
