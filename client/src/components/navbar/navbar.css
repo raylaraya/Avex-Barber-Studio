@@ -58,17 +58,18 @@
 }
 
 .login-button {
-  padding: 10px 20px;
   background-color: #495057;
   text-decoration: none;
   color: white;
   border: none;
   border-radius: 6px;
   font-size: 1.2em;
-  padding: 10px 40px;
+  padding: 10px 20px;
+  margin: 0 0.2em;
   display: inline-block;
   align-self: center;
   transition: background-color 0.5s ease, transform 0.3s ease;
+  white-space: nowrap;
 }
 
 .login-button:hover {

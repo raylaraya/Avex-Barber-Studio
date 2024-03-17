@@ -46,9 +46,14 @@ const Navbar = () => {
             Logout
           </button>
         ) : (
-          <Link to="/login" className="login-button">
-            Login
-          </Link>
+          <>
+            <Link to="/login" className="login-button">
+              Log In
+            </Link>
+            <Link to="/signup" className="login-button">
+              Sign Up
+            </Link>
+          </>
         )}
         <div className="hamburger" onClick={handleClick}>
           {isNavExpanded ? <FaTimes /> : <FaBars />}
