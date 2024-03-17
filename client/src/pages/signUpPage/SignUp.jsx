@@ -8,9 +8,7 @@ const SignUp = () => {
     <div className="login-page">
       <Navbar />
       <h1>WELCOME</h1>
-      <div className="signup-form-container">
-        <SignUpForm />
-      </div>
+      <SignUpForm />
     </div>
   );
 };
