@@ -57,37 +57,9 @@
   display: none;
 }
 
-.login-button {
-  background-color: #495057;
-  text-decoration: none;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.2em;
-  padding: 10px 20px;
-  margin: 0 0.2em;
-  display: inline-block;
-  align-self: center;
-  transition: background-color 0.5s ease, transform 0.3s ease;
-  white-space: nowrap;
-}
-
-.login-button:hover {
-  background-color: #e09f3e;
-  transform: scale(1.05);
-}
-
-.login-button:active {
-  transform: scale(0.95);
-}
-
 @media (max-width: 923px) {
   .navbar {
     z-index: 100;
-  }
-
-  .login-button {
-    display: none;
   }
 
   .hamburger {

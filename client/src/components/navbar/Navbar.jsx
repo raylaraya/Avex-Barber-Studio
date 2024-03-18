@@ -31,7 +31,7 @@ const Navbar = () => {
           />
         </Link>
         <ul className={`navbar-menu ${isNavExpanded ? "expanded" : ""}`}>
-          <li className="navbar-item">
+          <li className="navbar-item" onClick={() => setIsNavExpanded(false)}>
             <Link to="/">HOME</Link>
           </li>
           <li className="navbar-item">
@@ -40,21 +40,21 @@ const Navbar = () => {
           <li className="navbar-item">
             <Link to="/about">ABOUT</Link>
           </li>
+          {user ? (
+            <li className="navbar-item">
+              <button onClick={handleLogout}>LOG OUT</button>
+            </li>
+          ) : (
+            <>
+              <li className="navbar-item">
+                <Link to="/login">LOG IN</Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/signup">SIGN UP</Link>
+              </li>
+            </>
+          )}
         </ul>
-        {user ? (
-          <button onClick={handleLogout} className="login-button">
-            Logout
-          </button>
-        ) : (
-          <>
-            <Link to="/login" className="login-button">
-              Log In
-            </Link>
-            <Link to="/signup" className="login-button">
-              Sign Up
-            </Link>
-          </>
-        )}
         <div className="hamburger" onClick={handleClick}>
           {isNavExpanded ? <FaTimes /> : <FaBars />}
         </div>
