@@ -42,7 +42,9 @@ const Navbar = () => {
           </li>
           {user ? (
             <li className="navbar-item">
-              <button onClick={handleLogout}>LOG OUT</button>
+              <button onClick={handleLogout} className="logout-button">
+                LOG OUT
+              </button>
             </li>
           ) : (
             <>

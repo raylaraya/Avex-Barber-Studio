@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./signup-form.css";
 
 const SignUpForm = () => {
@@ -11,6 +13,11 @@ const SignUpForm = () => {
     phoneNumber: "",
     role: "client", // Default role selection
   });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +37,12 @@ const SignUpForm = () => {
 
     try {
       await axios.post(`http://localhost:3001${endpoint}`, formData);
-      alert("Registration successful!");
-      // Redirect the user or clear the form
+      await login(formData.email, formData.password);
+      setSuccess(true);
+      setTimeout(() => navigate("/"), 2000);
     } catch (error) {
+      setError("Registration failed. Please try again.");
       console.error("Registration failed:", error.response.data.error);
-      alert("Registration failed. Please try again.");
     }
   };
 
@@ -91,6 +99,12 @@ const SignUpForm = () => {
           <option value="employee">Employee</option>
         </select>
         <button type="submit">Sign Up</button>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {success && (
+          <div style={{ color: "green" }}>
+            Registration successful! Redirecting...
+          </div>
+        )}
       </form>
     </div>
   );
