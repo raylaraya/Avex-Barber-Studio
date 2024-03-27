@@ -39,7 +39,7 @@ const SignUpForm = () => {
       await axios.post(`http://localhost:3001${endpoint}`, formData);
       await login(formData.email, formData.password);
       setSuccess(true);
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/appointments"), 2000);
     } catch (error) {
       setError("Registration failed. Please try again.");
       console.error("Registration failed:", error.response.data.error);

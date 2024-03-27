@@ -4,6 +4,7 @@ import Appointments from "./pages/appointmentsPage/Appointments";
 import About from "./pages/aboutPage/About";
 import Login from "./pages/loginPage/Login";
 import SignUp from "./pages/signUpPage/SignUp";
+import Booking from "./pages/bookingPage/Booking";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/appointments/book" element={<Booking />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

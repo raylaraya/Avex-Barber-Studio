@@ -1,0 +1,40 @@
+.booking-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.service-option {
+  border: 1px solid #ccc;
+  margin: 1rem 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.service-option input[type="radio"] {
+  margin-right: 10px;
+}
+
+.service-description {
+  margin: 0.5rem;
+}
+
+.book-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #ccc; /* Default disabled state */
+  border: none;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+.book-button:enabled {
+  background-color: #007bff; /* Enabled state */
+  cursor: pointer;
+}
+
+.book-button:enabled:hover {
+  background-color: #0056b3;
+}
