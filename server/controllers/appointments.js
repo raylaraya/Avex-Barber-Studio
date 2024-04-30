@@ -46,6 +46,22 @@ export const createAppointment = async (req, res, next) => {
   }
 };
 
+export const getFilteredAppointments = async (req, res, next) => {
+  try {
+    let filter = {};
+    if (req.user.role === "employee") {
+      filter.employee = req.user.id; // Filter by employee ID if the user is an employee
+    } else {
+      filter.client = req.user.id; // Filter by client ID for clients
+    }
+
+    const appointments = await Appointment.find(filter);
+    res.status(200).json(appointments);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getUnbookedTimeSlots = async (req, res, next) => {
   try {
     const unbookedSlots = await TimeSlot.find({ isBooked: false });

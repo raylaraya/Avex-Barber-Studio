@@ -9,6 +9,7 @@ import {
   updateAppointment,
   getBookedTimeSlots,
   getUnbookedTimeSlots,
+  getFilteredAppointments,
 } from "../controllers/appointments.js";
 
 const router = express.Router();
@@ -25,8 +26,8 @@ router.get("/timeslots/booked", verifyEmployee, getBookedTimeSlots);
 // GET A SINGLE APPOINTMENT
 router.get("/:id", verifyUser, getAppointment);
 
-// GET ALL APPOINTMENTS
-router.get("/", verifyEmployee, getAllAppointments);
+// GET FILTERED APPOINTMENTS
+router.get("/", verifyUser, getFilteredAppointments);
 
 // UPDATE
 router.put("/:id", verifyUser, updateAppointment);

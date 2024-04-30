@@ -40,6 +40,11 @@ const Navbar = () => {
           <li className="navbar-item">
             <Link to="/about">ABOUT</Link>
           </li>
+          {user && (
+            <li className="navbar-item">
+              <Link to="/appointments/viewbookings">BOOKINGS</Link>
+            </li>
+          )}
           {user ? (
             <li className="navbar-item">
               <button onClick={handleLogout} className="logout-button">

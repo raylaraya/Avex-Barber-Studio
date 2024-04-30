@@ -33,9 +33,6 @@ const Home = () => {
       <div className="hero-section">
         <h1>AVEX BARBER STUDIO</h1>
         <p>The ultimate grooming experience</p>
-        <Link to="/appointments" className="book-button">
-          Book an Appointment
-        </Link>
       </div>
       <h2 className="services-header">SERVICES WE PROVIDE</h2>
       <ServicesSection />
