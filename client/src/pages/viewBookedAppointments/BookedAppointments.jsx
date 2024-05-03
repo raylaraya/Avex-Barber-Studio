@@ -3,7 +3,6 @@ import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import TimeGrid from "../../components/timeGrid/TimeGrid";
 import BookedTimeGrid from "../../components/bookedTimeGrid/BookedTimeGrid";
-import "./booked-appointments.css";
 
 const BookedAppointments = () => {
   return (

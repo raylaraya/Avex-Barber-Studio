@@ -65,13 +65,18 @@ export const login = async (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json({ msg: "Invalid credentials." });
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT);
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT, {
+      expiresIn: "1h",
+    });
 
     const { password, role, phoneNumber, ...otherDetails } = user._doc;
 
     res
       .cookie("access_token", token, {
         httpOnly: true,
+        expires: newDate(Date.now() + 3600000),
+        // secure: true, // use secure in production
+        sameSite: "strict",
       })
       .status(200)
       .json({ ...otherDetails });

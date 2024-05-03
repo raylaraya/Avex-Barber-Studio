@@ -4,7 +4,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
-import "./booked-time-grid.css";
 
 const BookedTimeGrid = () => {
   const [events, setEvents] = useState([]);
