@@ -53,7 +53,7 @@ app.use("/users", userRoutes);
 app.use("/appointments", appointmentRoutes);
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, "../client/build")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
