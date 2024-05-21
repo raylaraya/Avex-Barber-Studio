@@ -8,13 +8,23 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import appointmentRoutes from "./routes/appointments.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Setup __dirname for ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express(); // invokes express application so we can use middleware
-dotenv.config(); // allows us to use dotenv files
+dotenv.config();
+
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
+}
 
 const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true, // to allow cookies
+  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  credentials: true,
 };
 
 const connect = async () => {
@@ -42,9 +52,15 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/appointments", appointmentRoutes);
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../client/build")));
+
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong!";
+  if (process.env.NODE_ENV === "production") {
+    delete err.stack;
+  }
   return res.status(errorStatus).json({
     success: false,
     status: errorStatus,
@@ -53,7 +69,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(3001, () => {
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+});
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
   connect();
-  console.log("Connected to backend");
+  console.log(`Connected to backend on port ${PORT}`);
 });
