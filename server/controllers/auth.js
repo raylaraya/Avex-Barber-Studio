@@ -74,8 +74,8 @@ export const login = async (req, res) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        expires: newDate(Date.now() + 3600000),
-        // secure: true, // use secure in production
+        expires: new Date(Date.now() + 3600000),
+        secure: true,
         sameSite: "strict",
       })
       .status(200)
