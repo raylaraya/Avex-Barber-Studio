@@ -1,7 +1,7 @@
 import "./home.css";
 import Navbar from "../../components/navbar/Navbar";
 import { Link } from "react-router-dom";
-import ServicesSection from "../../components/servicesSection/servicesSection";
+import ServicesSection from "../../components/servicesSection/ServicesSection";
 import Footer from "../../components/footer/Footer";
 import AboutSection from "../../components/aboutSection/AboutSection";
 import { useEffect } from "react";
