@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
 import moment from "moment";
 import Modal from "../ModalWindow/Modal";
-import ServicesSection from "../servicesSection/servicesSection";
+import ServicesSection from "../servicesSection/ServicesSection";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import "./time-grid.css";
