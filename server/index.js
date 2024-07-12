@@ -43,7 +43,19 @@ mongoose.connection.on("disconnected", () => {
 // middlewares
 app.use(cookieParser());
 app.use(express.json()); // allows us to send JSON object to express server when testing API endpoints (postman)
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        connectSrc: ["'self'", "http://localhost:3001"], // Allow connections to your backend server
+        scriptSrc: ["'self'", "'unsafe-inline'"], // Adjust as needed for your scripts
+        styleSrc: ["'self'", "'unsafe-inline'"], // Adjust as needed for your styles
+        imgSrc: ["'self'", "data:"], // Allow image sources from the same origin and data URIs
+      },
+    },
+  })
+);
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors(corsOptions)); // cross origin resource sharing policies

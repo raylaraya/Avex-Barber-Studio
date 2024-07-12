@@ -52,6 +52,8 @@ export const createEmployee = async (req, res) => {
   }
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 /* LOGGING IN */
 export const login = async (req, res) => {
   try {
@@ -75,8 +77,8 @@ export const login = async (req, res) => {
       .cookie("access_token", token, {
         httpOnly: true,
         expires: new Date(Date.now() + 3600000),
-        secure: true,
-        sameSite: "strict",
+        secure: isProduction, // Only set secure flag in production
+        sameSite: isProduction ? "strict" : "lax",
       })
       .status(200)
       .json({ ...otherDetails });
