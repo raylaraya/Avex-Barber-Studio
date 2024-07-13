@@ -15,15 +15,26 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express(); // invokes express application so we can use middleware
+const app = express();
 dotenv.config();
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
+const allowedOrigins = [
+  "http://localhost:5173", // Local frontend
+  "https://avex-barbershop-227ef649606a.herokuapp.com", // Deployed frontend
+];
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
@@ -48,10 +59,15 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        connectSrc: ["'self'", "http://localhost:3001"], // Allow connections to your backend server
-        scriptSrc: ["'self'", "'unsafe-inline'"], // Adjust as needed for your scripts
-        styleSrc: ["'self'", "'unsafe-inline'"], // Adjust as needed for your styles
-        imgSrc: ["'self'", "data:"], // Allow image sources from the same origin and data URIs
+        connectSrc: [
+          "'self'",
+          "http://localhost:3001",
+          "https://avex-barbershop-227ef649606a.herokuapp.com",
+        ],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        fontSrc: ["'self'", "https://fonts.gstatic.com"],
+        imgSrc: ["'self'", "data:"],
       },
     },
   })
