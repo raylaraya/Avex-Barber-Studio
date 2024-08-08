@@ -32,7 +32,6 @@ const Home = () => {
       <Navbar />
       <div className="hero-section">
         <h1>AVEX BARBER STUDIO</h1>
-        <p>The ultimate grooming experience</p>
       </div>
       <h2 className="services-header">SERVICES WE PROVIDE</h2>
       <ServicesSection />
