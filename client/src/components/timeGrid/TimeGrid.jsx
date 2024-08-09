@@ -16,11 +16,13 @@ const TimeGrid = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   // Fetch available time slots from the backend
   const fetchAvailableTimeSlots = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/appointments/timeslots/unbooked"
+        `${apiUrl}/appointments/timeslots/unbooked`
       );
       const availableTimeSlots = response.data.map((slot) => ({
         id: slot._id,
