@@ -55,7 +55,7 @@ const populateTimeSlots = async () => {
   await clearExistingTimeSlots();
 
   const startDate = moment(); // Start from today
-  const endDate = moment().add(1, "months"); // Populate for the next 1 month
+  const endDate = moment().add(6, "months"); // Populate for the next 6 months
 
   for (
     let currentDate = startDate;

@@ -9,11 +9,13 @@ const BookedTimeGrid = () => {
   const [events, setEvents] = useState([]);
   const { user } = useAuth();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const fetchBookedAppointments = async () => {
     if (!user) return;
 
     try {
-      const endpoint = "http://localhost:3001/appointments";
+      const endpoint = `${apiUrl}/appointments`;
 
       const response = await axios.get(endpoint, { withCredentials: true });
       const bookedAppointments = response.data.map((appointment) => ({

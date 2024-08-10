@@ -27,6 +27,8 @@ const SignUpForm = () => {
     }));
   };
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,7 +38,7 @@ const SignUpForm = () => {
         : "/auth/register/employee";
 
     try {
-      await axios.post(`http://localhost:3001${endpoint}`, formData);
+      await axios.post(`${apiUrl}${endpoint}`, formData);
       await login(formData.email, formData.password);
       setSuccess(true);
       setTimeout(() => navigate("/appointments"), 2000);

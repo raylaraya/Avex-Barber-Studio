@@ -44,6 +44,8 @@ const BookingComponent = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const bookAppointment = async () => {
     if (!user || !selectedService) {
       console.log("User is not logged or service is not selected");
@@ -51,7 +53,7 @@ const BookingComponent = () => {
     }
     try {
       await axios.post(
-        "http://localhost:3001/appointments",
+        `${apiUrl}/appointments`,
         {
           client: user._id, // Assuming user._id is available
           employee: "656679b739ca6e7cc5a7e59a", // Hardcoded employee ID

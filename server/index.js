@@ -18,10 +18,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 
-if (process.env.NODE_ENV !== "production") {
-  dotenv.config();
-}
-
 const allowedOrigins = [
   "http://localhost:5173", // Local frontend
   "https://avex-barbershop-227ef649606a.herokuapp.com", // Deployed frontend
@@ -98,10 +94,11 @@ app.use((err, req, res, next) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+  res.sendFile(path.join(__dirname + "/../client/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 3001;
+console.log("Starting the server...");
 app.listen(PORT, () => {
   connect();
   console.log(`Connected to backend on port ${PORT}`);
