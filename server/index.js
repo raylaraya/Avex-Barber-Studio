@@ -59,6 +59,7 @@ app.use(
           "'self'",
           "http://localhost:3001",
           "https://avex-barbershop-227ef649606a.herokuapp.com",
+          "https://www.avexbarberstudio.com",
         ],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
