@@ -19,7 +19,7 @@ const app = express();
 dotenv.config();
 
 const allowedOrigins = [
-  "http://localhost:5173", // Local frontend
+  "http://localhost:5173",
   "https://avex-barbershop-227ef649606a.herokuapp.com", // Deployed frontend
 ];
 
