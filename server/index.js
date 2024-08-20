@@ -21,7 +21,7 @@ dotenv.config();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://avex-barbershop-227ef649606a.herokuapp.com", // Heroku domain
-  "https://avex-barber-studio-5bf782be4099.herokuapp.com/", // Heroku test domain
+  "https://avex-barber-studio-5bf782be4099.herokuapp.com", // Heroku test domain
   "https://avexbarberstudio.com", // custom domain
   "https://www.avexbarberstudio.com", // subdomain
 ];
@@ -62,7 +62,7 @@ app.use(
           "'self'",
           "http://localhost:3001",
           "https://avex-barbershop-227ef649606a.herokuapp.com",
-          "https://avex-barber-studio-5bf782be4099.herokuapp.com/", // Heroku test domain
+          "https://avex-barber-studio-5bf782be4099.herokuapp.com", // Heroku test domain
           "https://avexbarberstudio.com", // custom domain
           "https://www.avexbarberstudio.com", // subdomain
         ],
