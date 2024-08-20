@@ -20,7 +20,10 @@ dotenv.config();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://avex-barbershop-227ef649606a.herokuapp.com", // Deployed frontend
+  "https://avex-barbershop-227ef649606a.herokuapp.com", // Heroku domain
+  "https://avex-barber-studio-5bf782be4099.herokuapp.com/", // Heroku test domain
+  "https://avexbarberstudio.com", // custom domain
+  "https://www.avexbarberstudio.com", // subdomain
 ];
 
 const corsOptions = {
@@ -59,7 +62,9 @@ app.use(
           "'self'",
           "http://localhost:3001",
           "https://avex-barbershop-227ef649606a.herokuapp.com",
-          "https://www.avexbarberstudio.com",
+          "https://avex-barber-studio-5bf782be4099.herokuapp.com/", // Heroku test domain
+          "https://avexbarberstudio.com", // custom domain
+          "https://www.avexbarberstudio.com", // subdomain
         ],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
@@ -69,7 +74,7 @@ app.use(
     },
   })
 );
-// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors(corsOptions)); // cross origin resource sharing policies
 
