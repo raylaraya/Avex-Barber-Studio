@@ -69,7 +69,7 @@ app.use(
     },
   })
 );
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors(corsOptions)); // cross origin resource sharing policies
 
