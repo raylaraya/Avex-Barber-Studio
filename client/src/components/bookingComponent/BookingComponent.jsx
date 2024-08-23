@@ -69,8 +69,8 @@ const BookingComponent = () => {
       setModalContent(
         <p>
           Your appointment for {selectedService.title} on{" "}
-          {moment(date).format("dddd, MMMM Do YYYY, h:mm a")} has been
-          successfully booked!
+          {moment(date).format("dddd, MMMM Do, h:mm a")} has been successfully
+          booked!
         </p>
       );
       setIsModalOpen(true);
