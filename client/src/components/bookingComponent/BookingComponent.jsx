@@ -3,9 +3,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import moment from "moment";
+import Modal from "../ModalWindow/Modal";
 import "./booking-component.css";
 
-// Define your services
 const services = [
   {
     id: 1,
@@ -41,6 +41,8 @@ const BookingComponent = () => {
   const [searchParams] = useSearchParams();
   const date = searchParams.get("date");
   const [selectedService, setSelectedService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -48,7 +50,7 @@ const BookingComponent = () => {
 
   const bookAppointment = async () => {
     if (!user || !selectedService) {
-      console.log("User is not logged or service is not selected");
+      console.log("User is not logged in or service is not selected");
       return;
     }
     try {
@@ -64,7 +66,18 @@ const BookingComponent = () => {
         { withCredentials: true }
       );
       console.log("Booking successful");
-      navigate("/appointments"); // Navigate to appointments page or a confirmation page
+      setModalContent(
+        <p>
+          Your appointment for {selectedService.title} on{" "}
+          {moment(date).format("dddd, MMMM Do YYYY, h:mm a")} has been
+          successfully booked!
+        </p>
+      );
+      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+        navigate("/appointments");
+      }, 3000); // Close modal and navigate after 3 seconds
     } catch (error) {
       console.error("Booking failed", error);
     }
@@ -97,6 +110,15 @@ const BookingComponent = () => {
       >
         BOOK
       </button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          navigate("/appointments");
+        }}
+      >
+        {modalContent}
+      </Modal>
     </div>
   );
 };

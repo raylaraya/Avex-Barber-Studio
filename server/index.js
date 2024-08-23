@@ -20,6 +20,7 @@ dotenv.config();
 
 const allowedOrigins = [
   "http://localhost:5173",
+  "http://localhost:3001",
   "https://avex-barbershop-227ef649606a.herokuapp.com", // Heroku domain
   "https://avex-barber-studio-5bf782be4099.herokuapp.com", // Heroku test domain
   "https://avexbarberstudio.com", // custom domain
@@ -58,14 +59,7 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        connectSrc: [
-          "'self'",
-          "http://localhost:3001",
-          "https://avex-barbershop-227ef649606a.herokuapp.com",
-          "https://avex-barber-studio-5bf782be4099.herokuapp.com", // Heroku test domain
-          "https://avexbarberstudio.com", // custom domain
-          "https://www.avexbarberstudio.com", // subdomain
-        ],
+        connectSrc: ["'self'", ...allowedOrigins],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
