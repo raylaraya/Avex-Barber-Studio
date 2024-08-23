@@ -74,10 +74,6 @@ const BookingComponent = () => {
         </p>
       );
       setIsModalOpen(true);
-      setTimeout(() => {
-        setIsModalOpen(false);
-        navigate("/appointments");
-      }, 3000); // Close modal and navigate after 3 seconds
     } catch (error) {
       console.error("Booking failed", error);
     }
