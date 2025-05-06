@@ -1,0 +1,85 @@
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-info {
+  flex: 1;
+}
+
+.appointment-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.appointment-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: #666;
+}
+
+.appointment-date,
+.appointment-time,
+.appointment-price {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.appointment-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.reschedule-btn,
+.cancel-btn {
+  padding: 0.5rem 1 rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.reschedule-btn {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.reschedule-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.cancel-btn {
+  background-color: #ff4dff;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #ff7875;
+}
+
+@media (max-width: 768px) {
+  .appointment-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .appointment-actions {
+    margin-top: 1rem;
+    align-items: flex-end;
+  }
+}
