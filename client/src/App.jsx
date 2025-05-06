@@ -6,6 +6,7 @@ import Login from "./pages/loginPage/Login";
 import SignUp from "./pages/signUpPage/SignUp";
 import Booking from "./pages/bookingPage/Booking";
 import BookedAppointments from "./pages/viewBookedAppointments/BookedAppointments";
+import TestAppointmentCard from "./pages/testPage/TestAppointmentCard";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
           <Route
             path="/appointments/viewbookings"
             element={<BookedAppointments />}
+          />
+          <Route
+            path="/test-appointment-card"
+            element={<TestAppointmentCard />}
           />
         </Routes>
       </BrowserRouter>
