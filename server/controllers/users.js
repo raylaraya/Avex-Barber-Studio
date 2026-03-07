@@ -1,15 +1,5 @@
 import User from "../models/user.js";
 
-// /* READ */
-// export const getUser = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     res.status(200).json(user);
-//   } catch (err) {
-//     res.status(404).json({ message: err.message });
-//   }
-// };
-
 export const getUser = async (req, res) => {
   try {
     // Using req.user.id populated by VerifyToken middleware to fetch user details

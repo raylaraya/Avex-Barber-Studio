@@ -4,7 +4,7 @@ import "./appointment-card.css";
 
 const AppointmentCard = ({ appointment, onCancel, onReschedule }) => {
   const formattedDate = moment(appointment.date).format("dddd, MMMM Do YYYY");
-  const formattedTime = moment(appointment.date).format("h:mm a");
+  const formattedTime = moment(appointment.date).format("h:mma");
 
   return (
     <div className="appointment-card">
