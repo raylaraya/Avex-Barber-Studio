@@ -3,6 +3,8 @@ import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import TimeGrid from "../../components/timeGrid/TimeGrid";
 import BookedTimeGrid from "../../components/bookedTimeGrid/BookedTimeGrid";
+import AppointmentList from "../../components/appointmentList/AppointmentList";
+import { useAuth } from "../../context/AuthContext";
 
 const BookedAppointments = () => {
   return (
@@ -10,7 +12,7 @@ const BookedAppointments = () => {
       <Navbar />
       <h1 className="appointments-calendar-header">YOUR BOOKINGS</h1>
       {/* <TimeGrid /> */}
-      <BookedTimeGrid />
+      <AppointmentList />
       <Footer />
     </div>
   );
