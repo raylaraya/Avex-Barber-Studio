@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import AppointmentCard from "../appointmentCard/AppointmentCard";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -31,8 +32,10 @@ const AppointmentList = () => {
   if (loading) return <div className="Loading">Loading appointments...</div>;
 
   return (
-    <div>
-      <pre>{JSON.stringify(appointments, null, 2)}</pre>
+    <div className="appointment-list">
+      {appointments.map((appointment) => (
+        <AppointmentCard key={appointment._id} appointment={appointment} />
+      ))}
     </div>
   );
 };
