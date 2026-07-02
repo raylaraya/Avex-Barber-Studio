@@ -3,10 +3,12 @@ import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../context/AuthContext";
 import AppointmentCard from "../appointmentCard/AppointmentCard";
+import CancelModal from "../cancelModal/CancelModal";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const { user } = useAuth();
@@ -36,7 +38,27 @@ const AppointmentList = () => {
     setSelectedAppointment(appointment);
     setShowCancelModal(true);
     const date = moment(appointment.date).format("dddd, MMMM Do YYYY");
-    console.log("Cancelled appointment for: ", date);
+    console.log("Cancelled appointment for:", date);
+  };
+
+  const confirmCancel = async () => {
+    if (!selectedAppointment) return;
+
+    try {
+      await axios.delete(`${apiUrl}/appointments/${selectedAppointment._id}`, {
+        withCredentials: true,
+      });
+
+      setAppointments(
+        appointments.filter((app) => app._id !== selectedAppointment._id),
+      );
+
+      setShowCancelModal(false);
+      setSelectedAppointment(null);
+    } catch (err) {
+      console.error("Error cancelling appointment:", err);
+      setError("Failed to cancel appointment. Please try again later.");
+    }
   };
 
   if (loading) return <div className="Loading">Loading appointments...</div>;
@@ -52,6 +74,13 @@ const AppointmentList = () => {
           onCancel={handleCancel}
         />
       ))}
+
+      <CancelModal
+        isOpen={showCancelModal}
+        onClose={() => setShowCancelModal(false)}
+        onConfirm={confirmCancel}
+        appointment={selectedAppointment}
+      />
     </div>
   );
 };
