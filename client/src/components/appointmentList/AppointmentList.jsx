@@ -12,6 +12,7 @@ const AppointmentList = () => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
   const { user } = useAuth();
+
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -23,9 +24,16 @@ const AppointmentList = () => {
         const response = await axios.get(`${apiUrl}/appointments`, {
           withCredentials: true,
         });
-        setAppointments(response.data);
+
+        const sortedAppointments = response.data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date),
+        );
+
+        setAppointments(sortedAppointments);
+        setError(null);
       } catch (err) {
         console.error("Error fetching appointments:", err);
+        setError("Failed to load appointments. Please try again later.");
       } finally {
         setLoading(false);
       }
