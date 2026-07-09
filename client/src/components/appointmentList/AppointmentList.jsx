@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
 import AppointmentCard from "../appointmentCard/AppointmentCard";
 import CancelModal from "../cancelModal/CancelModal";
+import RescheduleModal from "../rescheduleModal/RescheduleModal";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -90,6 +91,21 @@ const AppointmentList = () => {
         onClose={() => setShowCancelModal(false)}
         onConfirm={confirmCancel}
         appointment={selectedAppointment}
+      />
+
+      <RescheduleModal
+        isOpen={showRescheduleModal}
+        onClose={() => setShowRescheduleModal(false)}
+        appointment={selectedAppointment}
+        onRescheduleSuccess={(updatedAppointment) => {
+          setAppointments(
+            appointments.map((app) =>
+              app._id === updatedAppointment._id ? updatedAppointment : app,
+            ),
+          );
+          setShowRescheduleModal(false);
+          setSelectedAppointment(null);
+        }}
       />
     </div>
   );
