@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import AppointmentCard from "../appointmentCard/AppointmentCard";
 import CancelModal from "../cancelModal/CancelModal";
 import RescheduleModal from "../rescheduleModal/RescheduleModal";
+import "./appointment-list.css";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);

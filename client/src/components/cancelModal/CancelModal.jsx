@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "../ModalWindow/Modal";
 import moment from "moment";
+import "./cancel-modal.css";
 
 const CancelModal = ({ isOpen, onClose, onConfirm, appointment }) => {
   if (!appointment) return null;

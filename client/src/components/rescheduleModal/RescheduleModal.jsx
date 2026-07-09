@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "../ModalWindow/Modal";
 import axios from "axios";
 import moment from "moment";
+import "./reschedule-modal.css";
 
 const RescheduleModal = ({
   isOpen,
