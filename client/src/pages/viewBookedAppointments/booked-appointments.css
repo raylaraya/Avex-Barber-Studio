@@ -1,0 +1,17 @@
+.appointments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.appointments-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 1rem;
+  }
+}
