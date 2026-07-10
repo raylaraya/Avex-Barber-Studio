@@ -74,17 +74,39 @@ const AppointmentList = () => {
     }
   };
 
+  const groupedAppointments = appointments.reduce((groups, appointment) => {
+    const date = new Date(appointment.date).toDateString();
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+    groups[date].push(appointment);
+    return groups;
+  }, {});
+
   if (loading) return <div className="loading">Loading appointments...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (appointments.length === 0) {
+    return (
+      <div className="no-appointments">You have no upcoming appointments.</div>
+    );
+  }
 
   return (
-    <div className="appointment-list">
-      {appointments.map((appointment) => (
-        <AppointmentCard
-          key={appointment._id}
-          appointment={appointment}
-          onCancel={handleCancel}
-          onReschedule={handleReschedule}
-        />
+    <div className="appointment-list-container">
+      {Object.entries(groupedAppointments).map(([date, dateAppointments]) => (
+        <div key={date} className="appointment-group">
+          <h2 className="date-header">{date}</h2>
+          <div className="appointment-list">
+            {dateAppointments.map((appointment) => (
+              <AppointmentCard
+                key={appointment._id}
+                appointment={appointment}
+                onCancel={handleCancel}
+                onReschedule={handleReschedule}
+              />
+            ))}
+          </div>
+        </div>
       ))}
 
       <CancelModal
