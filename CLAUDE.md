@@ -68,7 +68,21 @@ Key pages:
 - `/` — Home
 - `/appointments` — Appointment listing
 - `/appointments/book` — Booking flow
-- `/appointments/viewbookings` — View the user's booked appointments
+- `/appointments/viewbookings` — View the user's booked appointments (`BookedAppointments.jsx`)
 - `/login`, `/signup` — Auth pages
 
 All API calls use `axios` with `withCredentials: true` to send the auth cookie. The API base URL comes from `import.meta.env.VITE_API_URL`.
+
+### Appointment management
+
+`BookedAppointments.jsx` (`pages/viewBookedAppointments/`) branches by role:
+- **Clients** always see `AppointmentList` (list view only).
+- **Employees** get a `ViewToggle` (`components/viewToggle/`) to switch between `AppointmentList` (list view) and the existing `BookedTimeGrid` (calendar view).
+
+`AppointmentList` (`components/appointmentList/`) fetches the current user's appointments via `GET /appointments`, groups them by date, and renders one `AppointmentCard` per appointment with Cancel/Reschedule actions. It owns the open/close state for two modals:
+- `CancelModal` (`components/cancelModal/`) — confirms cancellation, then calls `DELETE /appointments/:id`.
+- `RescheduleModal` (`components/rescheduleModal/`) — loads future unbooked slots via `GET /appointments/timeslots/unbooked`, groups them by date, and on confirm calls `PUT /appointments/:id` with the new date.
+
+Both modals wrap the shared `Modal` component (`components/ModalWindow/`).
+
+> **Known gap:** `updateAppointment` and `deleteAppointment` in `server/controllers/appointments.js` only touch the `Appointment` document. They don't update the linked `TimeSlot` — rescheduling never frees the old slot or marks the new one booked, and cancelling never frees its slot. Slots can only become unbooked by being edited directly. Fix this in the controllers before relying on reschedule/cancel in production.
