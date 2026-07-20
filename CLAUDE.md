@@ -85,4 +85,4 @@ All API calls use `axios` with `withCredentials: true` to send the auth cookie. 
 
 Both modals wrap the shared `Modal` component (`components/ModalWindow/`).
 
-> **Known gap:** `updateAppointment` and `deleteAppointment` in `server/controllers/appointments.js` only touch the `Appointment` document. They don't update the linked `TimeSlot` — rescheduling never frees the old slot or marks the new one booked, and cancelling never frees its slot. Slots can only become unbooked by being edited directly. Fix this in the controllers before relying on reschedule/cancel in production.
+`updateAppointment` and `deleteAppointment` (`server/controllers/appointments.js`) keep the `Appointment` and its linked `TimeSlot` document in sync: rescheduling frees the old `TimeSlot` and books the new one (matched via `timeSlotId` in the request body), and cancelling frees the appointment's `TimeSlot`.
