@@ -60,7 +60,7 @@ const RescheduleModal = ({
       // Update the appointment with the new date
       const response = await axios.put(
         `${apiUrl}/appointments/${appointment._id}`,
-        { date: selectedSlot.date },
+        { date: selectedSlot.date, timeSlotId: selectedSlot._id },
         { withCredentials: true },
       );
 

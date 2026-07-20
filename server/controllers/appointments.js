@@ -100,11 +100,42 @@ export const getAllAppointments = async (req, res, next) => {
 
 export const updateAppointment = async (req, res, next) => {
   try {
-    const updatedAppointment = await Appointment.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found." });
+    }
+
+    const { timeSlotId, ...rest } = req.body;
+
+    // If the client is rescheduling to a different time slot, move the
+    // isBooked flag from the old TimeSlot document to the new one.
+    if (timeSlotId && timeSlotId !== appointment.timeSlot.toString()) {
+      const newTimeSlot = await TimeSlot.findOne({
+        _id: timeSlotId,
+        isBooked: false,
+      });
+
+      if (!newTimeSlot) {
+        return res
+          .status(400)
+          .json({ message: "The selected time slot is no longer available." });
+      }
+
+      await TimeSlot.findByIdAndUpdate(appointment.timeSlot, {
+        $set: { isBooked: false },
+        $unset: { appointment: "" },
+      });
+
+      newTimeSlot.isBooked = true;
+      newTimeSlot.appointment = appointment._id;
+      await newTimeSlot.save();
+
+      appointment.timeSlot = newTimeSlot._id;
+    }
+
+    Object.assign(appointment, rest);
+    const updatedAppointment = await appointment.save();
+
     res.status(200).json(updatedAppointment);
   } catch (err) {
     next(err);
@@ -113,7 +144,18 @@ export const updateAppointment = async (req, res, next) => {
 
 export const deleteAppointment = async (req, res, next) => {
   try {
-    await Appointment.findByIdAndDelete(req.params.id);
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found." });
+    }
+
+    await TimeSlot.findByIdAndUpdate(appointment.timeSlot, {
+      $set: { isBooked: false },
+      $unset: { appointment: "" },
+    });
+
+    await appointment.deleteOne();
+
     res.status(200).json("Appointment has been deleted");
   } catch (err) {
     next(err);
