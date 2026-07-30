@@ -1,16 +1,20 @@
 import { Appointment, TimeSlot } from "../models/appointment.js";
-import moment from "moment-timezone";
 
 export const createAppointment = async (req, res, next) => {
   try {
-    // Extract and format the desired date and time from the request body
-    const desiredDateTime = moment.tz(req.body.date, "America/New_York");
+    const { timeSlotId } = req.body;
 
-    // Find an available time slot that matches the desired date and time
-    // Note: You will need to adjust the time slot finding logic here based on your updated TimeSlot model
-    // For example, if you're now using a full 'date' field in TimeSlot, you would compare against that
+    if (!timeSlotId) {
+      return res
+        .status(400)
+        .json({ message: "A timeSlotId is required to book an appointment." });
+    }
+
+    // Look up the exact time slot the client selected, rather than
+    // matching by date, which can miss due to timezone/precision drift
+    // or match the wrong slot if two share a timestamp.
     const timeSlot = await TimeSlot.findOne({
-      date: desiredDateTime.toDate(), // Convert to JavaScript Date object for comparison
+      _id: timeSlotId,
       isBooked: false,
     });
 
@@ -25,7 +29,7 @@ export const createAppointment = async (req, res, next) => {
     const newAppointment = new Appointment({
       client: req.body.client,
       employee: req.body.employee,
-      date: desiredDateTime.toDate(), // Convert moment back to JS Date
+      date: timeSlot.date, // Use the time slot's own date as the source of truth
       price: req.body.price,
       service: req.body.service,
       timeSlot: timeSlot._id, // Link the appointment to the found time slot
