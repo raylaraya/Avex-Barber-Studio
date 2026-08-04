@@ -71,7 +71,7 @@ export const login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const { password, role, phoneNumber, ...otherDetails } = user._doc;
+    const { password, ...otherDetails } = user._doc;
 
     res
       .cookie("access_token", token, {
