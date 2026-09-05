@@ -1,4 +1,5 @@
 import { Appointment, TimeSlot } from "../models/appointment.js";
+import mongoose from "mongoose";
 
 export const createAppointment = async (req, res, next) => {
   try {
@@ -8,6 +9,10 @@ export const createAppointment = async (req, res, next) => {
       return res
         .status(400)
         .json({ message: "A timeSlotId is required to book an appointment." });
+    }
+
+    if (typeof timeSlotId !== "string" || !mongoose.Types.ObjectId.isValid(timeSlotId)) {
+      return res.status(400).json({ message: "Invalid timeSlotId format." });
     }
 
     // Look up the exact time slot the client selected, rather than
@@ -114,6 +119,10 @@ export const updateAppointment = async (req, res, next) => {
     // If the client is rescheduling to a different time slot, move the
     // isBooked flag from the old TimeSlot document to the new one.
     if (timeSlotId && timeSlotId !== appointment.timeSlot.toString()) {
+      if (typeof timeSlotId !== "string" || !mongoose.Types.ObjectId.isValid(timeSlotId)) {
+        return res.status(400).json({ message: "Invalid timeSlotId format." });
+      }
+
       const newTimeSlot = await TimeSlot.findOne({
         _id: timeSlotId,
         isBooked: false,
