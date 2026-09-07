@@ -91,6 +91,10 @@ export const getBookedTimeSlots = async (req, res, next) => {
 
 export const getAppointment = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
     const appointment = await Appointment.findById(req.params.id);
     res.status(200).json(appointment);
   } catch (err) {
@@ -109,12 +113,17 @@ export const getAllAppointments = async (req, res, next) => {
 
 export const updateAppointment = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
     const appointment = await Appointment.findById(req.params.id);
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found." });
     }
 
     const { timeSlotId, ...rest } = req.body;
+    const { timeSlot, ...safeRest } = rest;
 
     // If the client is rescheduling to a different time slot, move the
     // isBooked flag from the old TimeSlot document to the new one.
@@ -134,10 +143,13 @@ export const updateAppointment = async (req, res, next) => {
           .json({ message: "The selected time slot is no longer available." });
       }
 
-      await TimeSlot.findByIdAndUpdate(appointment.timeSlot, {
-        $set: { isBooked: false },
-        $unset: { appointment: "" },
-      });
+      await TimeSlot.findOneAndUpdate(
+        { _id: { $eq: appointment.timeSlot } },
+        {
+          $set: { isBooked: false },
+          $unset: { appointment: "" },
+        }
+      );
 
       newTimeSlot.isBooked = true;
       newTimeSlot.appointment = appointment._id;
@@ -146,7 +158,7 @@ export const updateAppointment = async (req, res, next) => {
       appointment.timeSlot = newTimeSlot._id;
     }
 
-    Object.assign(appointment, rest);
+    Object.assign(appointment, safeRest);
     const updatedAppointment = await appointment.save();
 
     res.status(200).json(updatedAppointment);
@@ -157,15 +169,22 @@ export const updateAppointment = async (req, res, next) => {
 
 export const deleteAppointment = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
     const appointment = await Appointment.findById(req.params.id);
     if (!appointment) {
       return res.status(404).json({ message: "Appointment not found." });
     }
 
-    await TimeSlot.findByIdAndUpdate(appointment.timeSlot, {
-      $set: { isBooked: false },
-      $unset: { appointment: "" },
-    });
+    await TimeSlot.findOneAndUpdate(
+      { _id: { $eq: appointment.timeSlot } },
+      {
+        $set: { isBooked: false },
+        $unset: { appointment: "" },
+      }
+    );
 
     await appointment.deleteOne();
 
