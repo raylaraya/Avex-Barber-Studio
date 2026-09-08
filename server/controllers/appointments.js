@@ -1,16 +1,25 @@
 import { Appointment, TimeSlot } from "../models/appointment.js";
-import moment from "moment-timezone";
+import mongoose from "mongoose";
 
 export const createAppointment = async (req, res, next) => {
   try {
-    // Extract and format the desired date and time from the request body
-    const desiredDateTime = moment.tz(req.body.date, "America/New_York");
+    const { timeSlotId } = req.body;
 
-    // Find an available time slot that matches the desired date and time
-    // Note: You will need to adjust the time slot finding logic here based on your updated TimeSlot model
-    // For example, if you're now using a full 'date' field in TimeSlot, you would compare against that
+    if (!timeSlotId) {
+      return res
+        .status(400)
+        .json({ message: "A timeSlotId is required to book an appointment." });
+    }
+
+    if (typeof timeSlotId !== "string" || !mongoose.Types.ObjectId.isValid(timeSlotId)) {
+      return res.status(400).json({ message: "Invalid timeSlotId format." });
+    }
+
+    // Look up the exact time slot the client selected, rather than
+    // matching by date, which can miss due to timezone/precision drift
+    // or match the wrong slot if two share a timestamp.
     const timeSlot = await TimeSlot.findOne({
-      date: desiredDateTime.toDate(), // Convert to JavaScript Date object for comparison
+      _id: timeSlotId,
       isBooked: false,
     });
 
@@ -25,7 +34,7 @@ export const createAppointment = async (req, res, next) => {
     const newAppointment = new Appointment({
       client: req.body.client,
       employee: req.body.employee,
-      date: desiredDateTime.toDate(), // Convert moment back to JS Date
+      date: timeSlot.date, // Use the time slot's own date as the source of truth
       price: req.body.price,
       service: req.body.service,
       timeSlot: timeSlot._id, // Link the appointment to the found time slot
@@ -82,6 +91,10 @@ export const getBookedTimeSlots = async (req, res, next) => {
 
 export const getAppointment = async (req, res, next) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
     const appointment = await Appointment.findById(req.params.id);
     res.status(200).json(appointment);
   } catch (err) {
@@ -100,11 +113,54 @@ export const getAllAppointments = async (req, res, next) => {
 
 export const updateAppointment = async (req, res, next) => {
   try {
-    const updatedAppointment = await Appointment.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      { new: true }
-    );
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found." });
+    }
+
+    const { timeSlotId, ...rest } = req.body;
+    const { timeSlot, ...safeRest } = rest;
+
+    // If the client is rescheduling to a different time slot, move the
+    // isBooked flag from the old TimeSlot document to the new one.
+    if (timeSlotId && timeSlotId !== appointment.timeSlot.toString()) {
+      if (typeof timeSlotId !== "string" || !mongoose.Types.ObjectId.isValid(timeSlotId)) {
+        return res.status(400).json({ message: "Invalid timeSlotId format." });
+      }
+
+      const newTimeSlot = await TimeSlot.findOne({
+        _id: timeSlotId,
+        isBooked: false,
+      });
+
+      if (!newTimeSlot) {
+        return res
+          .status(400)
+          .json({ message: "The selected time slot is no longer available." });
+      }
+
+      await TimeSlot.findOneAndUpdate(
+        { _id: { $eq: appointment.timeSlot } },
+        {
+          $set: { isBooked: false },
+          $unset: { appointment: "" },
+        }
+      );
+
+      newTimeSlot.isBooked = true;
+      newTimeSlot.appointment = appointment._id;
+      await newTimeSlot.save();
+
+      appointment.timeSlot = newTimeSlot._id;
+    }
+
+    Object.assign(appointment, safeRest);
+    const updatedAppointment = await appointment.save();
+
     res.status(200).json(updatedAppointment);
   } catch (err) {
     next(err);
@@ -113,7 +169,25 @@ export const updateAppointment = async (req, res, next) => {
 
 export const deleteAppointment = async (req, res, next) => {
   try {
-    await Appointment.findByIdAndDelete(req.params.id);
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid appointment id." });
+    }
+
+    const appointment = await Appointment.findById(req.params.id);
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found." });
+    }
+
+    await TimeSlot.findOneAndUpdate(
+      { _id: { $eq: appointment.timeSlot } },
+      {
+        $set: { isBooked: false },
+        $unset: { appointment: "" },
+      }
+    );
+
+    await appointment.deleteOne();
+
     res.status(200).json("Appointment has been deleted");
   } catch (err) {
     next(err);

@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import appointmentRoutes from "./routes/appointments.js";
@@ -38,6 +39,23 @@ const corsOptions = {
   credentials: true,
 };
 
+// Baseline limit for all routes
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Stricter limit for auth routes to blunt credential stuffing / brute force
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { msg: "Too many attempts, please try again later." },
+});
+
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
@@ -71,8 +89,9 @@ app.use(
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(cors(corsOptions)); // cross origin resource sharing policies
+app.use(limiter);
 
-app.use("/auth", authRoutes);
+app.use("/auth", authLimiter, authRoutes);
 app.use("/users", userRoutes);
 app.use("/appointments", appointmentRoutes);
 

@@ -22,17 +22,20 @@ npm run lint               # Run ESLint (zero warnings allowed)
 npm run preview            # Preview the production build
 ```
 
-### Server (Express backend) — run from root
+### Server (Express backend) — run from `server/`
 ```bash
-node server/index.js       # Start the API server at http://localhost:3001
+nodemon index.js           # Start the API server at http://localhost:3001 (development)
+node index.js              # Start without auto-reload
 ```
 
+> **Important:** Always run the server from inside the `server/` directory. `dotenv` loads `.env` relative to your current working directory, so running from the root will fail to find `server/.env` and `MONGO_URL` will be undefined. The root-level `npm start` works on Heroku only because Heroku injects env vars directly — it does not use a `.env` file.
+
 ### Local development
-Run both concurrently: start the Express server (`node server/index.js`) and the Vite dev server (`npm run dev` in `client/`). The Vite dev server proxies API calls since `VITE_API_URL` is set in the client's `.env`.
+Run both concurrently in separate terminals: `nodemon index.js` from `server/`, and `npm run dev` from `client/`. The Vite dev server proxies API calls since `VITE_API_URL` is set in the client's `.env`.
 
 ## Environment Variables
 
-**Server** (`.env` in root):
+**Server** (`.env` in `server/`):
 - `MONGO_URL` — MongoDB connection string
 - `JWT` — JWT secret
 - `PORT` — defaults to 3001
@@ -65,7 +68,21 @@ Key pages:
 - `/` — Home
 - `/appointments` — Appointment listing
 - `/appointments/book` — Booking flow
-- `/appointments/viewbookings` — View the user's booked appointments
+- `/appointments/viewbookings` — View the user's booked appointments (`BookedAppointments.jsx`)
 - `/login`, `/signup` — Auth pages
 
 All API calls use `axios` with `withCredentials: true` to send the auth cookie. The API base URL comes from `import.meta.env.VITE_API_URL`.
+
+### Appointment management
+
+`BookedAppointments.jsx` (`pages/viewBookedAppointments/`) branches by role:
+- **Clients** always see `AppointmentList` (list view only).
+- **Employees** get a `ViewToggle` (`components/viewToggle/`) to switch between `AppointmentList` (list view) and the existing `BookedTimeGrid` (calendar view).
+
+`AppointmentList` (`components/appointmentList/`) fetches the current user's appointments via `GET /appointments`, groups them by date, and renders one `AppointmentCard` per appointment with Cancel/Reschedule actions. It owns the open/close state for two modals:
+- `CancelModal` (`components/cancelModal/`) — confirms cancellation, then calls `DELETE /appointments/:id`.
+- `RescheduleModal` (`components/rescheduleModal/`) — loads future unbooked slots via `GET /appointments/timeslots/unbooked`, groups them by date, and on confirm calls `PUT /appointments/:id` with the new date.
+
+Both modals wrap the shared `Modal` component (`components/ModalWindow/`).
+
+`updateAppointment` and `deleteAppointment` (`server/controllers/appointments.js`) keep the `Appointment` and its linked `TimeSlot` document in sync: rescheduling frees the old `TimeSlot` and books the new one (matched via `timeSlotId` in the request body), and cancelling frees the appointment's `TimeSlot`.

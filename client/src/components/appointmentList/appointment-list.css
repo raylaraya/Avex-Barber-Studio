@@ -1,0 +1,46 @@
+.appointment-list-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.appointment-group {
+  margin-bottom: 2rem;
+}
+
+.date-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eaeaea;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loading,
+.error,
+.no-appointments {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+}
+
+.loading {
+  color: #666;
+}
+
+.error {
+  color: #ff4d4f;
+}
+
+.no-appointments {
+  color: #666;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 3rem;
+}

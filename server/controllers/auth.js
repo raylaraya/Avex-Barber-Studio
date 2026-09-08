@@ -57,6 +57,10 @@ const isProduction = process.env.NODE_ENV === "production";
 /* LOGGING IN */
 export const login = async (req, res) => {
   try {
+    if (typeof req.body.email !== "string") {
+      return res.status(400).json({ msg: "Invalid credentials." });
+    }
+
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).json({ msg: "Invalid credentials." });
 
@@ -71,7 +75,7 @@ export const login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const { password, role, phoneNumber, ...otherDetails } = user._doc;
+    const { password, ...otherDetails } = user._doc;
 
     res
       .cookie("access_token", token, {

@@ -47,7 +47,9 @@ const TimeGrid = () => {
     if (!user) {
       setIsModalOpen(true);
     } else {
-      navigate(`/appointments/book?date=${event.startStr}`);
+      navigate(
+        `/appointments/book?date=${event.startStr}&timeSlotId=${event.id}`,
+      );
     }
   };
 

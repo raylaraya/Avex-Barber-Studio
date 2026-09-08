@@ -40,6 +40,7 @@ const services = [
 const BookingComponent = () => {
   const [searchParams] = useSearchParams();
   const date = searchParams.get("date");
+  const timeSlotId = searchParams.get("timeSlotId");
   const [selectedService, setSelectedService] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -49,8 +50,10 @@ const BookingComponent = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const bookAppointment = async () => {
-    if (!user || !selectedService) {
-      console.log("User is not logged in or service is not selected");
+    if (!user || !selectedService || !timeSlotId) {
+      console.log(
+        "User is not logged in, service is not selected, or time slot is missing",
+      );
       return;
     }
     try {
@@ -59,7 +62,7 @@ const BookingComponent = () => {
         {
           client: user._id, // Assuming user._id is available
           employee: "656679b739ca6e7cc5a7e59a", // Hardcoded employee ID
-          date,
+          timeSlotId,
           price: selectedService.price,
           service: selectedService.title,
         },
@@ -101,7 +104,7 @@ const BookingComponent = () => {
       ))}
       <button
         className="book-button"
-        disabled={!selectedService}
+        disabled={!selectedService || !timeSlotId}
         onClick={bookAppointment}
       >
         BOOK
