@@ -19,6 +19,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 dotenv.config();
 
+// Heroku's router sits in front of the dyno as a single proxy hop, so trust
+// its X-Forwarded-For header for accurate client IPs (used by express-rate-limit).
+app.set("trust proxy", 1);
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3001",
